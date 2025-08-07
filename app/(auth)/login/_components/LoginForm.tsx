@@ -44,7 +44,7 @@ export function LoginForm() {
 				fetchOptions: {
 					onSuccess: () => {
 						toast.success("Verification email sent! Please check your inbox.");
-						router.push(`/verify-request`);
+						router.push(`/verify-request?email=${email}`);
 					},
 					onError: () => {
 						toast.error("error sending verification email. Please try again.");
