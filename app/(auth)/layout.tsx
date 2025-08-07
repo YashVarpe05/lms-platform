@@ -30,8 +30,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 					By clicking continue, you agree to our{" "}
 					<span className="hover:text-primary hover:underline">
 						Terms of Service
-					</span>{" "}
-					and{" "}
+					</span>
+					and
 					<span className="hover:text-primary hover:underline">
 						Privacy Policy
 					</span>
