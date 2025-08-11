@@ -1,24 +1,50 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/ui/themeToggle";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const features = [
+interface featuresProps {
+	title: string;
+	description: string;
+	icon: string;
+}
+
+const features: featuresProps[] = [
 	{
 		title: "Comprehensive Course",
 		description:
-            "Access a wide range of carefully curated designed by industry experts.",
-        icon:"📖"
+			"Access a wide range of carefully curated designed by industry experts.",
+		icon: "📖",
+	},
+	{
+		title: "Interactive Learning",
+		description:
+			"Engage with interactive content and assessments to reinforce your understanding.",
+		icon: "🧩",
+	},
+	{
+		title: "Progress Tracking",
+		description:
+			"Monitor your progress and achievements throughout the course.",
+		icon: "📈",
+	},
+	{
+		title: "Community Support",
+		description:
+			"Connect with fellow learners and instructors for guidance and support.",
+		icon: "⏰",
 	},
 ];
 
 export default function Home() {
 	const router = useRouter();
 	const { data: session } = authClient.useSession();
+
 	async function signOut() {
 		await authClient.signOut({
 			fetchOptions: {
@@ -29,6 +55,7 @@ export default function Home() {
 			},
 		});
 	}
+
 	return (
 		<>
 			<section className="relative py-20">
@@ -47,13 +74,34 @@ export default function Home() {
 						<Link href="/courses" className={buttonVariants({ size: "lg" })}>
 							Explore Courses
 						</Link>
-						<Link href="/login" className={buttonVariants({ size: "lg" })}>
-							Sign in
-						</Link>
+						{session ? (
+							<Button onClick={signOut} size="lg" variant="outline">
+								Sign Out
+							</Button>
+						) : (
+							<Link
+								href="/login"
+								className={buttonVariants({ size: "lg", variant: "outline" })}
+							>
+								Sign In
+							</Link>
+						)}
 					</div>
 				</div>
 			</section>
-			<section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></section>
+			<section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+				{features.map((feature, index) => (
+					<Card key={index} className="hover:shadow-lg transition-shadow">
+						<CardHeader>
+							<div className="text-4xl mb-4">{feature.icon}</div>
+							<CardTitle>{feature.title}</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<p className="text-muted-foreground">{feature.description}</p>
+						</CardContent>
+					</Card>
+				))}
+			</section>
 		</>
 	);
 }
