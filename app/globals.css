@@ -162,7 +162,19 @@
     font-family: var(--font-genos), ui-sans-serif, sans-serif !important;
   }
 
-  h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, label {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  div,
+  a,
+  button,
+  input,
+  label {
     font-family: var(--font-genos), sans-serif !important;
   }
 }

@@ -116,8 +116,7 @@ export function NavUser() {
 									DashBoard
 								</Link>
 							</DropdownMenuItem>
-							<DropdownMenuItem>
-								<DropdownMenuItem asChild />
+							<DropdownMenuItem asChild>
 								<Link href="/admin/courses">
 									<Tv2 />
 									Courses

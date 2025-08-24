@@ -25,14 +25,9 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<body
 				className={`${genos.variable} font-sans antialiased`}
-				style={{ fontFamily: 'var(--font-genos), ui-sans-serif, sans-serif' }}
+				style={{ fontFamily: "var(--font-genos), ui-sans-serif, sans-serif" }}
 			>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
-				>
+				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 					{children}
 					<Toaster />
 				</ThemeProvider>
