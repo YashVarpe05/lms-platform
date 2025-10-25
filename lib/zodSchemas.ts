@@ -1,10 +1,21 @@
-import { categories } from "@arcjet/next";
-import { FileKey } from "lucide-react";
-import { Princess_Sofia } from "next/font/google";
 import z, { file } from "zod";
 
 export const courseLevels = ["Beginner", "Intermediate", "Advanced"] as const;
 export const courseStatus = ["Draft", "Published", "Archived"] as const;
+export const courseCategories = [
+	"development",
+	"Business",
+	"Finance",
+	"IT & Software",
+	"Design",
+	"Marketing",
+	"Personal Development",
+	"Photography",
+	"Health & Fitness",
+	"Music",
+	"Lifestyle",
+	"Teaching & Academics",
+] as const;
 export const courseSchema = z.object({
 	title: z
 		.string()
@@ -27,7 +38,7 @@ export const courseSchema = z.object({
 	level: z.enum(courseLevels, {
 		message: "Level Must be one of Beginner, Intermediate, Advanced",
 	}),
-	categories: z.string(),
+	categories: z.enum(courseCategories,{message: "Category Must be one of: " + courseCategories.join(", ")}),
 	smallDescription: z
 		.string()
 		.min(3, { message: "Small Description Must be at least 3 characters long" })
@@ -41,3 +52,5 @@ export const courseSchema = z.object({
 		message: "Status Must be one of: " + courseStatus.join(", "),
 	}),
 });
+
+export type CourseSchemaType = z.infer<typeof courseSchema>;
