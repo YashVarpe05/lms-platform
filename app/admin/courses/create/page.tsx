@@ -29,8 +29,13 @@ import {
 import { Input } from "@/components/ui/input";
 import slugify from "slugify";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectItem, SelectTrigger } from "@/components/ui/select";
-import { SelectContent, SelectValue } from "@radix-ui/react-select";
+import {
+	Select,
+	SelectItem,
+	SelectTrigger,
+	SelectContent,
+	SelectValue,
+} from "@/components/ui/select";
 import { ca } from "zod/v4/locales";
 export default function CourseCreationPage() {
 	const form = useForm<CourseSchemaType>({
@@ -135,7 +140,7 @@ export default function CourseCreationPage() {
 								/>
 								<FormField
 									control={form.control}
-									name="Description"
+									name="description"
 									render={({ field }) => (
 										<FormItem>
 											<FormLabel>Description</FormLabel>
@@ -166,13 +171,13 @@ export default function CourseCreationPage() {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<FormField
 										control={form.control}
-										name="Category"
+										name="categories"
 										render={({ field }) => (
 											<FormItem>
 												<FormLabel>Category</FormLabel>
 												<Select
 													onValueChange={field.onChange}
-													defaultValue={field.value}
+													value={field.value}
 												>
 													<FormControl>
 														<SelectTrigger className="w-full">
@@ -199,7 +204,7 @@ export default function CourseCreationPage() {
 												<FormLabel>Level</FormLabel>
 												<Select
 													onValueChange={field.onChange}
-													defaultValue={field.value}
+													value={field.value}
 												>
 													<FormControl>
 														<SelectTrigger className="w-full">
@@ -220,7 +225,7 @@ export default function CourseCreationPage() {
 									/>
 									<FormField
 										control={form.control}
-										name="Duration"
+										name="duration"
 										render={({ field }) => (
 											<FormItem>
 												<FormLabel>Duration (Hours)</FormLabel>
