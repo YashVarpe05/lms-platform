@@ -37,6 +37,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { ca } from "zod/v4/locales";
+import { RichTextEditor } from "@/components/rich-text-editor/Editor";
 export default function CourseCreationPage() {
 	const form = useForm<CourseSchemaType>({
 		resolver: zodResolver(courseSchema),
@@ -145,11 +146,12 @@ export default function CourseCreationPage() {
 										<FormItem>
 											<FormLabel>Description</FormLabel>
 											<FormControl>
-												<Textarea
+												<RichTextEditor field={field} />
+												{/* <Textarea
 													placeholder="Description"
 													className="min-h-[120px]"
 													{...field}
-												/>
+												/> */}
 											</FormControl>
 											<FormMessage />
 										</FormItem>
