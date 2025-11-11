@@ -38,6 +38,7 @@ import {
 } from "@/components/ui/select";
 import { ca } from "zod/v4/locales";
 import { RichTextEditor } from "@/components/rich-text-editor/Editor";
+import { Uploader } from "@/components/file-uploader/Uploader";
 export default function CourseCreationPage() {
 	const form = useForm<CourseSchemaType>({
 		resolver: zodResolver(courseSchema),
@@ -147,11 +148,6 @@ export default function CourseCreationPage() {
 											<FormLabel>Description</FormLabel>
 											<FormControl>
 												<RichTextEditor field={field} />
-												{/* <Textarea
-													placeholder="Description"
-													className="min-h-[120px]"
-													{...field}
-												/> */}
 											</FormControl>
 											<FormMessage />
 										</FormItem>
@@ -164,7 +160,8 @@ export default function CourseCreationPage() {
 										<FormItem>
 											<FormLabel>Thumbnail image</FormLabel>
 											<FormControl>
-												<Input placeholder="Thumbnail Url" {...field} />
+												<Uploader />
+												{/* <Input placeholder="Thumbnail Url" {...field} /> */}
 											</FormControl>
 											<FormMessage />
 										</FormItem>
