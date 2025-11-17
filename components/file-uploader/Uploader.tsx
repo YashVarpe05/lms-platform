@@ -36,14 +36,30 @@ export function Uploader() {
 			...prev,
 			uploading: true,
 			progress: 0,
-        }));
-        
-        try {
-            
-        } catch (error) {
-            
-        }
-        
+		}));
+
+		try {
+			const presignedRespose = await fetch("/api/s3/upload", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					fileName: file.name,
+					contentType: file.type,
+					size: file.size,
+					isImage: true,
+				}),
+			});
+
+			if (!presignedRespose.ok) {
+				toast.error("File not uploaded successfully");
+			}
+
+			setFileState((prev) => ({
+				...prev,
+				uploading: true,
+				progress: 0,
+			}));
+		} catch (error) {}
 	}
 
 	const onDrop = useCallback((acceptedFiles: File[]) => {
