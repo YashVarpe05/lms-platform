@@ -38,7 +38,9 @@ export const courseSchema = z.object({
 	level: z.enum(courseLevels, {
 		message: "Level Must be one of Beginner, Intermediate, Advanced",
 	}),
-	categories: z.enum(courseCategories,{message: "Category Must be one of: " + courseCategories.join(", ")}),
+	category: z.enum(courseCategories, {
+		message: "Category Must be one of: " + courseCategories.join(", "),
+	}),
 	smallDescription: z
 		.string()
 		.min(3, { message: "Small Description Must be at least 3 characters long" })

@@ -1,4 +1,5 @@
 "use client";
+
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
 	Card,
@@ -14,7 +15,7 @@ import {
 	CourseSchemaType,
 	courseStatus,
 } from "@/lib/zodSchemas";
-import { ArrowLeft, PlusIcon, SparkleIcon } from "lucide-react";
+import { ArrowLeft, Loader2, PlusIcon, SparkleIcon } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,7 +40,14 @@ import {
 import { ca } from "zod/v4/locales";
 import { RichTextEditor } from "@/components/rich-text-editor/Editor";
 import { Uploader } from "@/components/file-uploader/Uploader";
+import { startTransition, useTransition } from "react";
+import { tryCatch } from "@/hooks/try-catch";
+import { CreateCourse } from "./actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 export default function CourseCreationPage() {
+	const [pending, StartTransition] = useTransition();
+	const router = useRouter();
 	const form = useForm<CourseSchemaType>({
 		resolver: zodResolver(courseSchema),
 		defaultValues: {
@@ -49,14 +57,30 @@ export default function CourseCreationPage() {
 			price: 0,
 			duration: 0,
 			level: "Beginner",
-			categories: "Health & Fitness",
+			category: "Health & Fitness",
 			status: "Draft",
 			slug: "",
 			smallDescription: "",
 		},
 	});
 	function onSubmit(values: CourseSchemaType) {
-		console.log(values);
+		// try {
+		// } catch {}
+		startTransition(async () => {
+			const { data: result, error } = await tryCatch(CreateCourse(values));
+
+			if (error) {
+				toast.error("An unexpected error occurred. Please try again.");
+				return;
+			}
+			if (result.status === "success") {
+				toast.success(result.message);
+				form.reset();
+				router.push("/admin/courses");
+			} else if (result.status === "error") {
+				toast.error(result.message);
+			}
+		});
 	}
 	return (
 		<>
@@ -173,7 +197,7 @@ export default function CourseCreationPage() {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<FormField
 										control={form.control}
-										name="categories"
+										name="category"
 										render={({ field }) => (
 											<FormItem>
 												<FormLabel>Category</FormLabel>
@@ -283,8 +307,21 @@ export default function CourseCreationPage() {
 										</FormItem>
 									)}
 								/>
-								<Button>
-									Create Course <PlusIcon className="ml-1" size={16} />
+								<Button
+									className="cursor-pointer"
+									type="submit"
+									disabled={pending}
+								>
+									{pending ? (
+										<>
+											Creating...
+											<Loader2 className="animate-spin ml-1" />
+										</>
+									) : (
+										<>
+											Create Course <PlusIcon className="ml-1" size={16} />
+										</>
+									)}
 								</Button>
 							</form>
 						</Form>
