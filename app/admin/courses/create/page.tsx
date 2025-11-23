@@ -46,7 +46,7 @@ import { CreateCourse } from "./actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 export default function CourseCreationPage() {
-	const [pending, StartTransition] = useTransition();
+	const [pending, startTransition] = useTransition();
 	const router = useRouter();
 	const form = useForm<CourseSchemaType>({
 		resolver: zodResolver(courseSchema),
