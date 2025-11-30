@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EditCourseForm } from "./_components/EditCourseForm";
+import { CourseStructure } from "./_components/CourseStructure";
 
 type Params = Promise<{
 	courseId: string;
@@ -20,10 +21,10 @@ export default async function EditRoute({ params }: { params: Params }) {
 	return (
 		<div>
 			<h1 className="text-3xl font-bold mb-8">
-				Edit Course: <span>{data.title}</span>{" "}
+				Edit Course: <span>{data.title}</span>
 			</h1>
 			<Tabs defaultValue="">
-				<TabsList className="grid grid-cols-2 w-full">
+				<TabsList className="grid grid-cols-2 w-full ">
 					<TabsTrigger value="basic-info">Basic Info</TabsTrigger>
 					<TabsTrigger value="course-structure">Course Structure</TabsTrigger>
 				</TabsList>
@@ -37,6 +38,20 @@ export default async function EditRoute({ params }: { params: Params }) {
 						</CardHeader>
 						<CardContent>
 							<EditCourseForm data={data} />
+						</CardContent>
+					</Card>
+				</TabsContent>
+				<TabsContent value="course-structure">
+					<Card>
+						<CardHeader>
+							<CardTitle>Course Structure</CardTitle>
+							<CardDescription>
+								Define the structure of the course including modules and
+								lessons.
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<CourseStructure data={data} />
 						</CardContent>
 					</Card>
 				</TabsContent>
