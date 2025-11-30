@@ -1,14 +1,15 @@
 import { AdminCourseType } from "@/app/data/admin/admin-get-courses";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
-import { useConstructUrl } from "@/hooks/use-construct-url";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
+} from "@/components/ui/dropdown-menu";
+import { useConstructUrl } from "@/hooks/use-construct-url";
+
 import {
 	ArrowRight,
 	Eye,
