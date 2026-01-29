@@ -38,6 +38,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { toast } from "sonner";
 
 interface iAppProps {
 	data: AdminCourseSingularType;
@@ -98,12 +99,54 @@ export function CourseStructure({ data }: iAppProps) {
 	function handleDragEnd(event) {
 		const { active, over } = event;
 		if (active.id !== over.id) {
-			setItems((items) => {
-				const oldIndex = items.indexOf(active.id);
-				const newIndex = items.indexOf(over.id);
+			console.log(active.id, over.id);
+			// setItems((items) => {
+			// 	const oldIndex = items.indexOf(active.id);
+			// 	const newIndex = items.indexOf(over.id);
 
-				return arrayMove(items, oldIndex, newIndex);
-			});
+			// 	return arrayMove(items, oldIndex, newIndex);
+			// });
+			return;
+		}
+		const activeId = active.id;
+		const overId = over.id;
+		const activeType = active.data.current?.type as "chapter" | "lesson";
+
+		const overType = over.data.current?.type as "chapter" | "lesson";
+		const courseId = data.id;
+
+		if (activeType === "chapter") {
+			let targetChapterId = null;
+
+			targetChapterId === overId;
+			if (overType === "chapter") {
+				targetChapterId = overId;
+			} else if (overType === "lesson") {
+				targetChapterId = over.data.current?.chapterId ?? null;
+			}
+
+			if (!targetChapterId) {
+				toast.error("Could not determine the chapter for reordering");
+				return;
+			}
+			const oldIndex = items.findIndex((item) => item.id === activeId);
+			const newIndex = items.findIndex((item) => item.id === targetChapterId);
+
+			if (oldIndex === -1 || newIndex === -1) {
+				toast.error("Could not find the chapter for reordering");
+				return;
+			}
+			const reordedLocalChapter = arrayMove(items, oldIndex.newIndex);
+
+			const updatedChapterForState = reordedLocalChapter.map(
+				(chapter, index) => ({
+					...chapter,
+					order: index + 1,
+				}),
+			);
+			const previousItems = [...items];
+
+			setItems(updatedChapterForState);
 		}
 	}
 
@@ -112,8 +155,8 @@ export function CourseStructure({ data }: iAppProps) {
 			items.map((chapter) =>
 				chapter.id === chapterId
 					? { ...chapter, isOpen: !chapter.isOpen }
-					: chapter
-			)
+					: chapter,
+			),
 		);
 	}
 
@@ -121,7 +164,7 @@ export function CourseStructure({ data }: iAppProps) {
 		useSensor(PointerSensor),
 		useSensor(KeyboardSensor, {
 			coordinateGetter: sortableKeyboardCoordinates,
-		})
+		}),
 	);
 	return (
 		<DndContext
