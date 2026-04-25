@@ -85,4 +85,5 @@ export async function CreateCourse(
 			message: "Failed to create course",
 		};
 	}
+
 }
